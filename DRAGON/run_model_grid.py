@@ -40,13 +40,16 @@ def generate_model(base_model_name, suffix, change_params):
 
 
 base_model_name = 'run_2D_DM'
-model_grid = {'D0_1e28': np.linspace(.5, 5, 3)}
-models_run = 0
+#model_grid = {'D0_1e28': np.linspace(.5, 5, 3)}
+model_grid = {'Delta': [0.4, 0.8]}
+#models_run = 0
 for param in model_grid:
     print(f'Changing {param}:')
     for value in model_grid[param]:
-        generate_model(base_model_name, models_run, {param: value})
-        print(f'- {param} = {value}: {base_model_name}_{models_run}')
-        os.system(f'./run_DRAGON.sh {base_model_name}_{models_run}')
-        models_run += 1
+        suffix = f'{param}={value}'
+        generate_model(base_model_name, suffix, {param: value})
+        print(f'- {param} = {value}: {base_model_name}_{suffix}')
+        #os.system(f'./run_DRAGON.sh {base_model_name}_{models_run}')
+        os.system(f'./run_DRAGON.sh {base_model_name}_{suffix}')
+        #models_run += 1
 print('                                        ... Paranoy@ Rulz!')
